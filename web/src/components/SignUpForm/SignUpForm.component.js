@@ -1,12 +1,17 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Formik } from "formik";
-import test  from "./SignUpForm.style";
+import test from "./SignUpForm.style";
+import axios from "axios";
 
 function SignUp() {
+  //const axios = require('axios').default;
   return (
+    //Formik component
     <Formik
+      //initial values for user
       initialValues={{ email: "", password: "" }}
+      //check errors
       validate={values => {
         const errors = {};
         if (!values.email) {
@@ -23,15 +28,30 @@ function SignUp() {
             values.password
           )
         ) {
-          errors.password =
-            "Invalid password";
+          errors.password = "Invalid password";
         }
 
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        //Declare une const URL_BASE = "http://localhost:9090"
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          axios({
+            method: "post",
+            //url: URL_BASE + "/members"
+            url: "http://localhost:9090/members/",
+            data: {
+              username: values.email,
+              password: values.password
+            }
+          })
+            .then(function response() {
+              console.log(response);
+            })
+            .catch(function error() {
+              console.log(error);
+            });
+          // alert(JSON.stringify(values, null, 2), "hello");
           setSubmitting(false);
         }, 400);
       }}
@@ -58,7 +78,7 @@ function SignUp() {
               onChange={handleChange}
               placeholder="Enter email"
             />
-            {errors.email && touched.email}
+            {errors.email && touched.email && errors.email}
             <Form.Text className="text-muted">
               We'll never share your email with anyone else.
             </Form.Text>
@@ -74,7 +94,7 @@ function SignUp() {
               onBlur={handleBlur}
               value={values.password}
             />
-            {errors.password && touched.password}
+            {errors.password && touched.password && errors.password}
           </Form.Group>
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
