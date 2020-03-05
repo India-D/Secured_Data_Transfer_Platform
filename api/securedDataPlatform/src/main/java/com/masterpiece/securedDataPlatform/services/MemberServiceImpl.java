@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
+
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -18,11 +19,16 @@ public class MemberServiceImpl implements MemberService {
         Member member = new Member();
         populateAndSave(dto,member);
     }
-
+/*
+    @Override
+    public MemberViewDto getOne(Long id) {
+        return memberRepository.getById(id);
+    }
+*/
 
     private void populateAndSave(MemberViewDto dto, Member member){
         member.setPassword(dto.getPassword());
-        member.setUsername(dto.getUsername());
+        member.setUsername(dto.getEmail());
         memberRepository.save(member);
     }
 }
