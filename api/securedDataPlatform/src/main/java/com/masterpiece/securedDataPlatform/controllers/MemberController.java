@@ -5,7 +5,6 @@ import com.masterpiece.securedDataPlatform.services.MemberService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/members")
