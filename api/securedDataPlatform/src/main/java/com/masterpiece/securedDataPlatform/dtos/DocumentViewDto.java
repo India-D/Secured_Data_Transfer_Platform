@@ -1,10 +1,9 @@
 package com.masterpiece.securedDataPlatform.dtos;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import com.masterpiece.securedDataPlatform.entities.Member;
+
+import javax.validation.constraints.*;
+import java.util.Date;
 
 public class DocumentViewDto {
 
@@ -17,9 +16,26 @@ public class DocumentViewDto {
     private String type;
 
     @NotNull
-    @Positive
-    private byte[] data;
+    private Date uploadDate;
 
+    private Date downloadDate;
+
+    @Size(max = 200)
+    private Member memberRecipient;
+
+    @NotEmpty
+    @Size(min = 2, max = 50)
+    @Email
+    //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid email address")
+    private String memberRecipientEmail;
+
+
+    @NotEmpty
+    @Size(max = 200)
+    private Member memberSender;
+
+    public DocumentViewDto() {
+    }
 
     public String getName() {
         return name;
@@ -37,11 +53,43 @@ public class DocumentViewDto {
         this.type = type;
     }
 
-    public byte[] getData() {
-        return data;
+    public Date getUploadDate() {
+        return uploadDate;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
+    public Date getDownloadDate() {
+        return downloadDate;
+    }
+
+    public void setDownloadDate(Date downloadDate) {
+        this.downloadDate = downloadDate;
+    }
+
+    public Member getMemberRecipient() {
+        return memberRecipient;
+    }
+
+    public void setMemberRecipient(Member memberRecipient) {
+        this.memberRecipient = memberRecipient;
+    }
+
+    public String getMemberRecipientEmail() {
+        return memberRecipientEmail;
+    }
+
+    public void setMemberRecipientEmail(String memberRecipientEmail) {
+        this.memberRecipientEmail = memberRecipientEmail;
+    }
+
+    public Member getMemberSender() {
+        return memberSender;
+    }
+
+    public void setMemberSender(Member memberSender) {
+        this.memberSender = memberSender;
     }
 }

@@ -5,8 +5,8 @@ import com.masterpiece.securedDataPlatform.entities.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-/*
-    MemberViewDto getById (Long id);
-*/
+
+    Member getById (Long id);
+
 
 }

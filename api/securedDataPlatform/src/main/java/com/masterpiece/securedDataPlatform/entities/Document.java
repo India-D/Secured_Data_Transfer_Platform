@@ -1,12 +1,13 @@
 package com.masterpiece.securedDataPlatform.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Email;
+import java.util.Date;
 
 @Entity
-public class Document {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Document extends AbstractEntity {
 
     @Column(length = 200, nullable = false)
     private String name;
@@ -14,22 +15,29 @@ public class Document {
     @Column(length = 200, nullable = false)
     private String type;
 
-    @Lob
     @Column(nullable = false)
-    private byte[] data;
+    private String fileUrl;
 
-    public Document(String name, String type, byte[] data) {
-        this.name = name;
-        this.type = type;
-        this.data = data;
-    }
+    @Column(nullable = true)
+    private Date downloadDate;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = true)
+    private Date uploadDate;
 
-    public void setId(Long id) {
-        this.id = id;
+    @ManyToOne
+    private Member memberRecipient;
+
+    @Column(length = 50, nullable = false)
+    @Email
+   // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid password address")
+    private String memberRecipientEmail;
+
+    @ManyToOne
+    private Member memberSender;
+
+
+    public Document() {
+
     }
 
     public String getName() {
@@ -48,11 +56,51 @@ public class Document {
         this.type = type;
     }
 
-    public byte[] getData() {
-        return data;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public Date getDownloadDate() {
+        return downloadDate;
+    }
+
+    public void setDownloadDate(Date downloadDate) {
+        this.downloadDate = downloadDate;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
+    public Member getMemberRecipient() {
+        return memberRecipient;
+    }
+
+    public void setMemberRecipient(Member memberRecipient) {
+        this.memberRecipient = memberRecipient;
+    }
+
+    public String getMemberRecipientEmail() {
+        return memberRecipientEmail;
+    }
+
+    public void setMemberRecipientEmail(String memberRecipientEmail) {
+        this.memberRecipientEmail = memberRecipientEmail;
+    }
+
+    public Member getMemberSender() {
+        return memberSender;
+    }
+
+    public void setMemberSender(Member memberSender) {
+        this.memberSender = memberSender;
     }
 }

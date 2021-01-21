@@ -1,10 +1,11 @@
 package com.masterpiece.securedDataPlatform.services;
 
 import com.masterpiece.securedDataPlatform.dtos.MemberViewDto;
+import com.masterpiece.securedDataPlatform.entities.Member;
 
 public interface MemberService {
     void create (MemberViewDto dto);
-/*
-    MemberViewDto getOne(Long id);
-*/
+
+    Member getOne(Long id);
+
 }

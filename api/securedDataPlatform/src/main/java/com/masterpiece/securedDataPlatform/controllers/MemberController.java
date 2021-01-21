@@ -19,19 +19,7 @@ public class MemberController {
     }
 
     @PostMapping
-    protected void create(@Valid @RequestBody MemberViewDto dto){
+    protected void create(@Valid @RequestBody MemberViewDto dto) {
         memberService.create(dto);
     }
-    /*
-    @GetMapping({"/all}")
-    protected MemberViewDto getAll(){
-         List<MemberViewDto> members = memberService.getAll();
-    return members;
-    }
-    /*
-    @GetMapping("{/id}")
-    protected  MemberViewDto getOne(@PathVariable("id") Long id){
-        return memberService.getOne(id);
-    }
-     */
 }

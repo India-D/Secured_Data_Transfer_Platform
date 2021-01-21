@@ -16,13 +16,17 @@ public class MemberViewDto {
     private String lastName;
 
     @NotEmpty
-    @Size(min = 2,max = 50)
+    @Size(min = 2, max = 50)
+    private String username;
+
+    @NotEmpty
+    @Size(min = 2, max = 50)
     @Email
-    @Pattern(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password address")
     private String email;
 
     @NotEmpty
-    @Size(min = 2,max = 20)
+    @Size(min = 2, max = 20)
     private String password;
 
     public MemberViewDto() {
@@ -42,6 +46,14 @@ public class MemberViewDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

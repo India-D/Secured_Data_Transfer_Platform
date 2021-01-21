@@ -1,18 +1,18 @@
 package com.masterpiece.securedDataPlatform.services;
 
-import com.masterpiece.securedDataPlatform.dtos.DocumentViewDto;
+import com.masterpiece.securedDataPlatform.dtos.DocumentDto;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
+import java.io.IOException;
 import java.util.List;
 
 
-@Service
 public interface DocumentService {
-    public void saveFile(MultipartFile file);
 
-    public void getFiles();
+    // void create(MultipartFile[] files) throws IOException;
 
-    public List<DocumentViewDto> findAll();
+    // public List<DocumentViewDto> findAll();
+    // List<DocumentViewDto> getAllFiles();
+    List<DocumentDto> findAllBySenderId(Long id);
+
+    void create(String fileName, String fileUrl, String recipientEmail) throws IOException;
 }

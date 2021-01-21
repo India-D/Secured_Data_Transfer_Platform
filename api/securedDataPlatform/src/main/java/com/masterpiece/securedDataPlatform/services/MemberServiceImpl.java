@@ -19,14 +19,16 @@ public class MemberServiceImpl implements MemberService {
         Member member = new Member();
         populateAndSave(dto,member);
     }
-/*
+
     @Override
-    public MemberViewDto getOne(Long id) {
+    public Member getOne(Long id) {
         return memberRepository.getById(id);
     }
-*/
 
     private void populateAndSave(MemberViewDto dto, Member member){
+        member.setFirstName(dto.getFirstName());
+        member.setLastName(dto.getLastName());
+        member.setEmail(dto.getEmail());
         member.setPassword(dto.getPassword());
         member.setUsername(dto.getEmail());
         memberRepository.save(member);
