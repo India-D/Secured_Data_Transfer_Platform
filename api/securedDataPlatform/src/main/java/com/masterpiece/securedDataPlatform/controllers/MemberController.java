@@ -22,4 +22,9 @@ public class MemberController {
     protected void create(@Valid @RequestBody MemberViewDto dto) {
         memberService.create(dto);
     }
+
+
+    protected void update(@PathVariable("id") Long id, @Valid @RequestBody MemberViewDto dto){
+        memberService.update(id,dto);
+    }
 }

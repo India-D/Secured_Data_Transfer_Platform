@@ -29,9 +29,21 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public void update(Member memberRecipient, Document document) {
+        document.setMemberRecipient(memberRecipient);
+        documentRepository.save(document);
+    }
+
+    @Override
     public List<DocumentDto> findAllBySenderId(Long id) {
         return documentRepository.findAllByMemberSenderId(id);
     }
+
+    @Override
+    public List<DocumentDto> findAllByRecipientId(Long id) {
+        return documentRepository.findAllByMemberRecipientId(id);
+    }
+
 
     public String getExtension(String fileName) {
         String extension = "";

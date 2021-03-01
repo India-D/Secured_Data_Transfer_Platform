@@ -5,6 +5,9 @@ import com.masterpiece.securedDataPlatform.entities.Member;
 import java.util.Date;
 
 public interface DocumentDto {
+
+    Long getId();
+
     String getName();
 
     String getType();
@@ -18,4 +21,7 @@ public interface DocumentDto {
     String getMemberRecipientEmail();
 
     Member getMemberSender();
+
+    String getFileUrl();
+
 }

@@ -20,11 +20,15 @@ public class DocumentViewDto {
 
     private Date downloadDate;
 
+    private String fileUrl;
+
+    private String filePath;
+
     @Size(max = 200)
     private Member memberRecipient;
 
     @NotEmpty
-    @Size(min = 2, max = 50)
+    @Size(max = 250)
     @Email
     //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid email address")
     private String memberRecipientEmail;
@@ -92,4 +96,13 @@ public class DocumentViewDto {
     public void setMemberSender(Member memberSender) {
         this.memberSender = memberSender;
     }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
 }

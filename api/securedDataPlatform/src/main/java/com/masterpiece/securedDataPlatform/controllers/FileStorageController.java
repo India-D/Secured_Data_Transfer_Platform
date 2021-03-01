@@ -1,15 +1,14 @@
 package com.masterpiece.securedDataPlatform.controllers;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
 import com.masterpiece.securedDataPlatform.entities.Document;
+import com.masterpiece.securedDataPlatform.repositories.DocumentRepository;
 import com.masterpiece.securedDataPlatform.services.AmazonClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 @RestController
@@ -17,15 +16,16 @@ import java.io.IOException;
 @CrossOrigin("http://localhost:3000")
 public class FileStorageController {
     private AmazonClient amazonClient;
+    private DocumentRepository documentRepository;
 
-    @Autowired
-    FileStorageController(AmazonClient amazonClient) {
+    public FileStorageController(AmazonClient amazonClient, DocumentRepository documentRepository) {
         this.amazonClient = amazonClient;
+        this.documentRepository = documentRepository;
     }
 
     @PostMapping("/uploadFile")
-    public String uploadFile(@RequestPart(value = "file") MultipartFile file,@RequestPart(value = "recipientEmail") String recipientEmail) throws Exception {
-        return this.amazonClient.uploadFile(file,recipientEmail);
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file, @RequestPart(value = "recipientEmail") String recipientEmail) throws Exception {
+        return this.amazonClient.uploadFile(file, recipientEmail);
     }
 
     @DeleteMapping("/deleteFile")
@@ -34,8 +34,19 @@ public class FileStorageController {
     }
 
     @GetMapping("/download/{id}")
-    @ResponseBody
-    public String getFile(@PathVariable(value = "id") Long id) throws IOException {
-       return this.amazonClient.getFile(id);
+    public ResponseEntity<ByteArrayResource> getFile(@PathVariable(value = "id") Long id) throws IOException {
+        byte[] fileByte = amazonClient.getFile(id);
+        ByteArrayResource byteArrayResources = new ByteArrayResource(fileByte);
+        Document document = documentRepository.getDocumentById(id);
+        String contentType = amazonClient.getContentType(id);
+
+        return ResponseEntity.ok().contentLength(byteArrayResources.contentLength()).contentType(MediaType.parseMediaType(contentType)).header("Content-Disposition", "attachment; filename= " + document.getName()).body(byteArrayResources);
     }
+
+
+    //  @PostMapping("/download/{id}")
+    //  public String getFile(@PathVariable(value = "id") Long id, @RequestPart(value = "filePath") String filePath) throws IOException {
+    //     return this.amazonClient.getFile(id, filePath);
+    // }
+
 }

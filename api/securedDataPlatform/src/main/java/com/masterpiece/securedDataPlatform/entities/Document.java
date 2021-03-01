@@ -27,9 +27,9 @@ public class Document extends AbstractEntity {
     @ManyToOne
     private Member memberRecipient;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 250, nullable = false)
     @Email
-   // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid password address")
+   // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid email address")
     private String memberRecipientEmail;
 
     @ManyToOne
@@ -103,4 +103,5 @@ public class Document extends AbstractEntity {
     public void setMemberSender(Member memberSender) {
         this.memberSender = memberSender;
     }
+
 }
