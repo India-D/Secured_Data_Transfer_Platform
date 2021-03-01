@@ -24,11 +24,11 @@ public class DocumentController {
         return documentService.findAllBySenderId(id);
     }
 
-/*    @PostMapping
-    protected void create(@Valid @RequestBody MultipartFile[] files) throws IOException {
-        documentService.create(files);
+    @GetMapping("member-recipient/{id}")
+    protected List<DocumentDto> findAllByRecipientId(@PathVariable("id") Long id){
+        return documentService.findAllByRecipientId(id);
+    }
 
-    }*/
 
 
 }

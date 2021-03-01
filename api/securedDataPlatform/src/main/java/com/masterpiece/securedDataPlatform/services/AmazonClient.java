@@ -7,12 +7,15 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.util.IOUtils;
 import com.masterpiece.securedDataPlatform.entities.Document;
 import com.masterpiece.securedDataPlatform.repositories.DocumentRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -109,14 +112,19 @@ public class AmazonClient {
         return new Date().getTime() + "-" + multipartFile.getOriginalFilename().replace(" ", "_");
     }
 
-    public String getFile(Long id) throws IOException {
+    public String getFile1(Long id, String filePath) throws IOException {
         Document document = documentRepository.getDocumentById(id);
         String fileUrl = document.getFileUrl();
         System.out.println(fileUrl);
         String fileName = document.getName();
         //fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
-        File file = new File("/home/india/Documents"+"/"+fileName);
-        ObjectMetadata s3Object = s3client.getObject(new GetObjectRequest(bucketName, fileName),file);
+//        File file = new File("/home/india/Documents"+"/"+fileName);
+        //  String home = System.getProperty("user.home");
+        Date date = new Date();
+        document.setDownloadDate(date);
+        documentRepository.save(document);
+        File file = new File(filePath + fileName);
+        ObjectMetadata s3Object = s3client.getObject(new GetObjectRequest(bucketName, fileName), file);
         // File multipartFile = convertMultiPartToFile(file);
 
         // test = s3client.getObject(new GetObjectRequest(bucketName,fileName),file);
@@ -127,5 +135,26 @@ public class AmazonClient {
         return fileUrl;
     }
 
+    public byte[] getFile(Long id) throws IOException {
+        Document document = documentRepository.getDocumentById(id);
+        S3Object s3Object = s3client.getObject(bucketName, document.getName());
+        byte[] byteArray = IOUtils.toByteArray(s3Object.getObjectContent());
+        return byteArray;
+    }
+
+    public String getContentType(Long id) {
+
+        Document document = documentRepository.getDocumentById(id);
+        MimetypesFileTypeMap m = new MimetypesFileTypeMap();
+        String contentType = m.getContentType(document.getName());
+        System.out.println("content type " + contentType);
+        return contentType;
+    }
+
+    public String getFileName(Long id) {
+        Document document = documentRepository.getDocumentById(id);
+        String name = document.getName();
+        return name;
+    }
 
 }

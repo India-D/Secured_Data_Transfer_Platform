@@ -3,9 +3,6 @@ package com.masterpiece.securedDataPlatform.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Member extends AbstractEntity {
@@ -18,7 +15,7 @@ public class Member extends AbstractEntity {
 
     @Column(length = 50, nullable = false)
     @Email
-   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password address")
+  // @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password address")
     private String email;
 
     @Column(length = 50, nullable = false)

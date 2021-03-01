@@ -13,5 +13,12 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
     List<DocumentDto> findAllByMemberSenderId(Long id);
 
+    List<DocumentDto> findAllByMemberRecipientId(Long id);
+
+
+    //JPA nous permet de retourner grâce à des conventions de nommage
+    List<Document> getByMemberRecipientEmail(String memberEmail);
+
+
     Document getDocumentById(Long id);
 }

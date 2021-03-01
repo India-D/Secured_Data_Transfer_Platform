@@ -22,7 +22,7 @@ public class MemberViewDto {
     @NotEmpty
     @Size(min = 2, max = 50)
     @Email
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password address")
+    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password address")
     private String email;
 
     @NotEmpty

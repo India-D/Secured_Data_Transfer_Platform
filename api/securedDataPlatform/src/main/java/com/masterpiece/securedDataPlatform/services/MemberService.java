@@ -8,4 +8,5 @@ public interface MemberService {
 
     Member getOne(Long id);
 
+    void update(Long id, MemberViewDto dto);
 }
